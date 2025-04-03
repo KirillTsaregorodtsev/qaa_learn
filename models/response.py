@@ -17,3 +17,11 @@ class Support(BaseModel):
 class User(BaseModel):
     data: Data
     support: Support
+
+class UsersList(BaseModel):
+    page: int
+    per_page: int
+    total: int
+    total_pages: int
+    data: list[Data]
+    support: Support
