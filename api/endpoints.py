@@ -7,10 +7,11 @@ class Users:
     def __init__(self, api_client: APIClient) -> None:
         self.api_client = api_client
 
-    def get_users(self):
+    def get_users(self,  page: t.Optional[int] = None):
         return self.api_client.request(
             method="GET",
-            path="/api/users"
+            path="/api/users",
+            params={"page": page}
         )
     def add_user(self, body):
         return self.api_client.request(
