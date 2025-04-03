@@ -13,6 +13,11 @@ class Users:
             path="/api/users",
             params={"page": page}
         )
+    def get_user(self, user_id: int):
+        return self.api_client.request(
+            method="GET",
+            path=f"/api/users/{user_id}"
+        )
     def add_user(self, body):
         return self.api_client.request(
             method="POST",
