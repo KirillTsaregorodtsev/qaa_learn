@@ -1,9 +1,9 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, EmailStr
 
 
 class Data(BaseModel):
     id: int
-    email: str
+    email: EmailStr
     first_name: str
     last_name: str
     avatar: str
@@ -12,7 +12,6 @@ class Data(BaseModel):
 class Support(BaseModel):
     url: str
     text: str
-
 
 class User(BaseModel):
     data: Data
@@ -25,3 +24,9 @@ class UsersList(BaseModel):
     total_pages: int
     data: list[Data]
     support: Support
+
+class CreatedUser(BaseModel):
+    id: int
+    createdAt: str
+    name: str
+    job: str
