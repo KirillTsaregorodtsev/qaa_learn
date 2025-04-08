@@ -144,4 +144,4 @@ def test_update_user_invalid_payload(reqresin):
         allure.attach(str(response[1]), name="Response JSON", attachment_type=allure.attachment_type.JSON)
 
     with allure.step("Check status code"):
-        assert response[0] == 400, f"The current status code is {response[0]} but should be 400"
+        assert response[0] == 400, f"The current status code is {response[0]} but should be 400."
