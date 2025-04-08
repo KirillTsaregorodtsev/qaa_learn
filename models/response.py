@@ -1,4 +1,4 @@
-from pydantic import BaseModel, Field, EmailStr
+from pydantic import BaseModel, EmailStr, field_validator, ConfigDict
 
 
 class Data(BaseModel):
@@ -25,7 +25,14 @@ class UsersList(BaseModel):
     data: list[Data]
     support: Support
 
+class UpdatedUser(BaseModel):
+    name: str
+    job: str
+    updatedAt: str
+
 class CreatedUser(BaseModel):
+    model_config = ConfigDict(strict=True)
+
     id: int
     createdAt: str
     name: str
