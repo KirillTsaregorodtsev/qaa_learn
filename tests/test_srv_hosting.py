@@ -78,11 +78,13 @@ class HostingPage(BasePage):
 
         logger.info("Setting max price")
         self._max_price_input.fill(str(max_price))
-        self.page.wait_for_timeout(1000)
+        #self.page.wait_for_timeout(1000)
 
         logger.info("Setting min price")
         self._min_price_input.fill(str(min_price))
-        self.page.wait_for_timeout(10000)
+        #self.page.wait_for_timeout(1000)
+
+        expect(self._cards_list.locator(':visible')).not_to_have_count(initial_card_count, timeout=5000)
 
     def check_the_servers_price_range(self, min_price: int, max_price: int):
         logger.info("Checking server prices in range")
