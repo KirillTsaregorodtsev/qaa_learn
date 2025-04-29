@@ -5,27 +5,18 @@ from playwright.sync_api import Page, expect
 
 BASE_URL = "https://gcore.com"
 
-# Настройка логгера
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.INFO)
 
-# Формат логов
 formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
-# Обработчик для файла
 file_handler = logging.FileHandler('test.log')
 file_handler.setLevel(logging.INFO)
 file_handler.setFormatter(formatter)
-
-# Обработчик для консоли
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
 console_handler.setFormatter(formatter)
-
-# Очистка обработчиков (на случай, если они уже были добавлены)
 logger.handlers.clear()
-
-# Добавление обработчиков
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
 
@@ -43,7 +34,6 @@ class BasePage:
 class HostingPage(BasePage):
     def __init__(self, page: Page):
         super().__init__(page)
-        # Локаторы
         self._server_type = lambda value: page.locator(f'gcore-server-configurator input[type="radio"][value="{value}"]')
         self._currency_option = lambda value: page.locator(f'gcore-switcher-currency input[type="radio"][value="{value}"]')
         self._filter_price_btn = page.get_by_role("button", name="Price")
@@ -111,7 +101,6 @@ def hosting_page(page: Page, context):
     context.tracing.stop(path="trace.zip")
 
 
-# Основной тест
 def test_gcore_hosting_page(hosting_page: HostingPage):
     min_price = 400
     max_price = 450
