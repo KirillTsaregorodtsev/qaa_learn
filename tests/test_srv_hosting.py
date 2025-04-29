@@ -73,14 +73,16 @@ class HostingPage(BasePage):
 
     def set_price_range(self, min_price: int, max_price: int):
         logger.info(f"Setting price range: min={min_price}, max={max_price}")
-        # Логируем количество карточек до применения фильтра
         initial_card_count = self._cards_list.count()
         logger.info(f"Initial number of cards: {initial_card_count}")
 
-        # Устанавливаем минимальную цену через JavaScript
-        logger.info("Setting min price via JavaScript")
-        self._max_price_input.fill(str(min_price))
+        logger.info("Setting max price")
+        self._max_price_input.fill(str(max_price))
+        self.page.wait_for_timeout(1000)
 
+        logger.info("Setting min price")
+        self._min_price_input.fill(str(min_price))
+        self.page.wait_for_timeout(10000)
 
     def check_the_servers_price_range(self, min_price: int, max_price: int):
         logger.info("Checking server prices in range")
