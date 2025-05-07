@@ -1,3 +1,4 @@
+import allure
 import pytest
 from playwright.sync_api import Page, expect, Error
 
@@ -16,9 +17,11 @@ class HostingPage(BasePage):
         self._max_price_input = page.locator('gcore-range-multi-slider input[type="number"]').last
         self._cards_list = page.locator('gcore-price-card')
 
+    @allure.step("Select server type: {server_type}")
     def select_server_type(self, server_type: str):
         self._server_type(server_type).click()
 
+    @allure.step("Select currency type: {currency_type}")
     def select_currency_type(self, currency_type: str):
         self._currency_option(currency_type).click()
 
@@ -26,16 +29,19 @@ class HostingPage(BasePage):
         selected_server = self._server_type(expected_value)
         expect(selected_server).to_be_checked()
 
+    @allure.step("Check currency switcher is set to {0}")
     def check_currency_switcher(self, expected_value: str):
         selected_currency = self._currency_option(expected_value)
         expect(selected_currency).to_be_checked()
 
+    @allure.step("Click price filter")
     def click_price_filter(self):
         self.page.wait_for_timeout(1000)
         logger.info("Clicking price filter button")
         self._filter_price_btn.click()
         self.page.wait_for_selector('gcore-range-multi-slider', state='visible')
 
+    @allure.step("Set price range: min={min_price}, max={max_price}")
     def set_price_range(self, min_price: int, max_price: int):
         """
         Sets the price range for the server cards and checks that the number of cards
@@ -57,6 +63,7 @@ class HostingPage(BasePage):
 
         expect(self._cards_list.locator(':visible')).not_to_have_count(initial_card_count, timeout=5000)
 
+    @allure.step("Check servers price range: min={min_price}, max={max_price}")
     def check_the_servers_price_range(self, min_price: int, max_price: int):
         """
         Checks that all server cards have prices in the given range.
@@ -149,6 +156,7 @@ class HostingPage(BasePage):
             actual_value = int(input_locator.input_value())
             assert actual_value == expected_value, assert_message.format(actual=actual_value)
 
+    @allure.step("Validate minimum price input behavior")
     def validate_min_price_input_behavior(self):
         self.validate_numeric_input_behavior(
             input_locator=self._min_price_input,
@@ -156,6 +164,7 @@ class HostingPage(BasePage):
             is_min=True
         )
 
+    @allure.step("Validate maximum price input behavior")
     def validate_max_price_input_behavior(self):
         self.validate_numeric_input_behavior(
             input_locator=self._max_price_input,
