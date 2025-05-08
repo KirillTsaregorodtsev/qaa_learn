@@ -50,6 +50,9 @@ def test_gcore_hosting_page(hosting_page: HostingPage):
     with allure.step("Validate minimum price input behavior"):
         hosting_page.validate_min_price_input_behavior()
 
+    with allure.step("Validate Maximum price input behavior"):
+        hosting_page.validate_max_price_input_behavior()
+
     with allure.step(f"Set price range to {min_price}-{max_price}"):
         hosting_page.set_price_range(min_price=min_price, max_price=max_price)
 
